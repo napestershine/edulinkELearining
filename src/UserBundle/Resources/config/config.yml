@@ -1,0 +1,34 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: UserBundle\Entity\User
+    service:
+        user_manager: pugx_user_manager
+
+pugx_multi_user:
+  users:
+    student:
+        entity:
+          class: UserBundle\Entity\Student
+#          factory:
+        registration:
+          form:
+            type: UserBundle\Form\Type\StudentRegistrationFormType
+            name: fos_user_registration_form
+            validation_groups:  [Registration, Default]
+          template: UserBundle:Registration:register_student.html.twig
+        profile:
+          form:
+            type: UserBundle\Form\Type\ProfileStudentFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default]
+    teacher:
+        entity:
+          class: UserBundle\Entity\Teacher
+        registration:
+          form:
+            type: UserBundle\Form\Type\TeacherRegistrationFormType
+          template: UserBundle:Registration:register_teacher.html.twig
+        profile:
+          form:
+            type: UserBundle\Form\Type\ProfileTeacherFormType
