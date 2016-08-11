@@ -68,3 +68,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+easy_admin:
+    entities:
+      - UserBundle\Entity\Teacher
+      - UserBundle\Entity\Student
