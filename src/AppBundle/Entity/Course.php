@@ -28,6 +28,16 @@ class Course
      */
     private $name;
 
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Module")
+     * @ORM\JoinTable(name="courses_modules",
+     *      joinColumns={@ORM\JoinColumn(name="course_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="module_id", referencedColumnName="id")}
+     *      )
+     */
+    private $modules;
+
 
     /**
      * Get id
