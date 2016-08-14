@@ -78,8 +78,8 @@ body, html {
     box-sizing: border-box;
 }
 
-.form-signin #inputEmail,
-.form-signin #inputPassword {
+.form-signin #username,
+.form-signin #password {
     direction: ltr;
     height: 44px;
     font-size: 16px;
