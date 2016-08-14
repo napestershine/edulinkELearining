@@ -1,14 +1,43 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-    <div>
+{#<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">#}
+    {#<div>#}
+        {#{% if invalid_username is defined %}#}
+            {#<p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>#}
+        {#{% endif %}#}
+        {#<label for="username">{{ 'resetting.request.username'|trans }}</label>#}
+        {#<input type="text" id="username" name="username" required="required" />#}
+    {#</div>#}
+    {#<div>#}
+        {#<input type="submit" value="{{ 'resetting.request.submit'|trans }}" />#}
+    {#</div>#}
+{#</form>#}
+
+{% block form %}
+
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
         {% if invalid_username is defined %}
             <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
         {% endif %}
-        <label for="username">{{ 'resetting.request.username'|trans }}</label>
-        <input type="text" id="username" name="username" required="required" />
-    </div>
-    <div>
-        <input type="submit" value="{{ 'resetting.request.submit'|trans }}" />
-    </div>
-</form>
+        {#<span id="reauth-email" class="reauth-email"></span>#}
+        {#<label for="username">{{ 'resetting.request.username'|trans }}</label>#}
+        <input type="text" id="username" class="form-control" name="username" placeholder="Username / Email" required="required" />
+        {#<input type="text" id="username" class="form-control" name="_username" placeholder="Username / Email" value="{{ last_username }}" required="required" />#}
+        {#<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>#}
+
+        {#<label for="password">{{ 'security.login.password'|trans }}</label>#}
+        {#<input type="password" id="password" class="form-control" name="_password" placeholder="Password" required="required" />#}
+
+        <div id="remember" class="checkbox">
+            {#<label>#}
+                {#<input type="checkbox" id="remember_me" name="_remember_me" value="on" /> Remember Me#}
+            {#</label>#}
+        </div>
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" id="_submit" name="_submit" value="{{ 'resetting.request.submit'|trans }}">Reset</button>
+        {#<input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />#}
+    </form><!-- /form -->
+    <a href="#" class="forgot-password">
+        Login
+    </a>
+
+{% endblock form %}
