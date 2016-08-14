@@ -30,7 +30,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "pugx/multi-user-bundle": "3.0.*@dev",
-        "javiereguiluz/easyadmin-bundle": "^1.15"
+        "javiereguiluz/easyadmin-bundle": "^1.15",
+        "symfony/assetic-bundle": "^2.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

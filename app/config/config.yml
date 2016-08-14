@@ -72,3 +72,8 @@ easy_admin:
     entities:
       - UserBundle\Entity\Teacher
       - UserBundle\Entity\Student
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
