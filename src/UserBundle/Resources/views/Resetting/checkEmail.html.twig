@@ -1,9 +1,16 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{#{% extends "FOSUserBundle::layout.html.twig" %}#}
 
-{% trans_default_domain 'FOSUserBundle' %}
+{#{% trans_default_domain 'FOSUserBundle' %}#}
 
-{% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
-{% endblock %}
+{#{% block fos_user_content %}#}
+{#<p>#}
+{#{{ 'resetting.check_email'|trans({'%email%': email}) }}#}
+{#</p>#}
+{#{% endblock %}#}
+
+{% extends "UserBundle::form_layout.html.twig" %}
+{% block form
+    <p>
+    {{ 'We have sent you an email. Plase check you email'|trans({'%email%': email}) }}
+    </p>
+{% endblock form %}
