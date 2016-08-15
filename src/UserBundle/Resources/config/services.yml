@@ -7,3 +7,12 @@ services:
         arguments: []
         tags:
             - { name: kernel.event_subscriber }
+
+
+#To loging_success hander to work, 'use_referer' and 'success_handler' should be set in security.yml:firewall:main
+#snipped from : https://gist.github.com/marydn/8061424
+    siplo_login_success_handler:
+        class:  UserBundle\Services\LoginSuccessHandler
+        arguments:  ["@router", "@security.authorization_checker"]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }

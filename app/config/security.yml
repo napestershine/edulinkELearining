@@ -21,6 +21,8 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                use_referer:         false #to redirect after loging
+                success_handler:     siplo_login_success_handler # to redirect after loging
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
 

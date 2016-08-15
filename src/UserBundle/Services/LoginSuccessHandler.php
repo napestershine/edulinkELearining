@@ -2,6 +2,7 @@
 
 namespace UserBundle\Services;
 
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -15,7 +16,7 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
     protected $router;
     protected $security;
 
-    public function __construct(Router $router, SecurityContext $security)
+    public function __construct(Router $router, AuthorizationChecker $security)
     {
         $this->router = $router;
         $this->security = $security;
@@ -34,11 +35,11 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
         }
         elseif ($this->security->isGranted('ROLE_TEACHER'))
         {
-            $response = new RedirectResponse($this->router->generate('siplo_teacher_home'));
+            $response = new RedirectResponse($this->router->generate('teacher_whiteboard'));
         }
         elseif ($this->security->isGranted('ROLE_STUDENT'))
         {
-            $response = new RedirectResponse($this->router->generate('siplo_student_home'));
+            $response = new RedirectResponse($this->router->generate('student_classroom'));
         }
 
 //        elseif ($this->security->isGranted('ROLE_USER'))
