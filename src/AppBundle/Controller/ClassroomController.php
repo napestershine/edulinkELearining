@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ClassroomController extends Controller
 {
     /**
-     * @Route("/classroom/student", name="studentClassroom")
+     * @Route("/classroom/student", name="student_classroom")
      */
     public function getStudentClassroomAction(Request $request)
     {
@@ -25,7 +25,7 @@ class ClassroomController extends Controller
     }
 
     /**
-     * @Route("/classroom/teacher/video", name="teacherVideo")
+     * @Route("/classroom/teacher/video", name="teacher_video")
      */
     public function getTeacherVideoAction(Request $request)
     {
@@ -33,7 +33,7 @@ class ClassroomController extends Controller
         return $this->render('@App/classroom/teacherVideo.html.twig');
     }
     /**
-     * @Route("/classroom/teacher/whiteboard", name="teacherWhiteboard")
+     * @Route("/classroom/teacher/whiteboard", name="teacher_whiteboard")
      */
     public function getTeacherWhiteboardAction(Request $request)
     {
