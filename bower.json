@@ -1,5 +1,5 @@
 {
-  "name": "edulinkELearining",
+  "name": "edulink-elearining",
   "homepage": "https://github.com/buddhikajay/edulinkELearining",
   "authors": [
     "buddhikajay <buddhika.12@cse.mrt.ac.lk>"
@@ -14,5 +14,8 @@
     "web/assets/vendor/",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
 }
