@@ -27,4 +27,3 @@ abstract class User extends BaseUser
         return (string) $this->username;
     }
 }
-

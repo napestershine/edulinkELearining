@@ -40,5 +40,28 @@ class Student extends User
     {
         return $this->id;
     }
-}
 
+    /**
+     * Set batch
+     *
+     * @param \UserBundle\Entity\Student $batch
+     *
+     * @return Student
+     */
+    public function setBatch(\UserBundle\Entity\Student $batch = null)
+    {
+        $this->batch = $batch;
+
+        return $this;
+    }
+
+    /**
+     * Get batch
+     *
+     * @return \UserBundle\Entity\Student
+     */
+    public function getBatch()
+    {
+        return $this->batch;
+    }
+}
