@@ -27,11 +27,7 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
 
         if ($this->security->isGranted('ROLE_ADMIN'))
         {
-            $response = new RedirectResponse($this->router->generate('siplo_admin_home'));
-        }
-        elseif ($this->security->isGranted('ROLE_GUARDIAN'))
-        {
-            $response = new RedirectResponse($this->router->generate('siplo_guardian_home'));
+            $response = new RedirectResponse($this->router->generate('easyadmin'));
         }
         elseif ($this->security->isGranted('ROLE_TEACHER'))
         {

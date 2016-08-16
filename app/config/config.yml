@@ -69,9 +69,29 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 easy_admin:
+#    disabled_actions: ['delete', 'edit', 'new']
+    site_name: Siplo
+    design:
+        assets:
+            favicon: '/assets/backend/favicon.png'
+    list:
+        actions:
+            - { name: 'show', icon: 'search', label: 'Show'}
+            - { name: 'edit', icon: 'pencil', label: 'Edit' }
+            - { name: 'delete', icon: 'trash', label: 'Delete' }
     entities:
-      - UserBundle\Entity\Teacher
-      - UserBundle\Entity\Student
+      Teacher:
+        class: UserBundle\Entity\Teacher
+        label: 'Teachers'
+        list:
+          title: 'All Teachers'
+          fields:
+            - id
+            - username
+            - { property: 'email', type: 'email' }
+            - enabled
+            - lastLogin
+#      - UserBundle\Entity\Student
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
