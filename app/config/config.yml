@@ -79,19 +79,83 @@ easy_admin:
             - { name: 'show', icon: 'search', label: 'Show'}
             - { name: 'edit', icon: 'pencil', label: 'Edit' }
             - { name: 'delete', icon: 'trash', label: 'Delete' }
+            - { name: 'search', icon: 'search', label: 'Search' }
     entities:
       Teacher:
         class: UserBundle\Entity\Teacher
         label: 'Teachers'
         list:
-          title: 'All Teachers'
+          title: 'Teachers'
           fields:
             - id
             - username
             - { property: 'email', type: 'email' }
             - enabled
             - lastLogin
-#      - UserBundle\Entity\Student
+      Student:
+        class: UserBundle\Entity\Student
+        label: 'Students'
+        list:
+          title: 'Students'
+          fields:
+            - id
+            - username
+            - { property: 'email', type: 'email' }
+            - enabled
+            - lastLogin
+      Batch:
+        class: AppBundle\Entity\Batch
+        label: 'Batches'
+        list:
+          title: 'Batches'
+        new:
+          title: 'New Batch'
+        edit:
+          title: 'Edit Batch'
+        delete:
+          title: 'Delete Batch'
+
+
+      Course:
+        class: AppBundle\Entity\Course
+        label: 'Courses'
+
+        list:
+          title: 'Courses'
+        new:
+          title: 'New Courses'
+        edit:
+          title: 'Edit Courses'
+        delete:
+          title: 'Delete Courses'
+
+
+      Module:
+        class: AppBundle\Entity\Module
+        label: 'Modules'
+
+        list:
+          title: 'Modules'
+        new:
+          title: 'New Module'
+        edit:
+          title: 'Edit Module'
+        delete:
+          title: 'Delete Module'
+
+      Sesssion:
+        class: AppBundle\Entity\Session
+        label: 'Sessions'
+
+        list:
+          title: 'Sessions'
+        new:
+          title: 'New Session'
+        edit:
+          title: 'Edit Session'
+        delete:
+          title: 'Delete Session'
+
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
