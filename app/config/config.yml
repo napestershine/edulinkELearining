@@ -92,6 +92,10 @@ easy_admin:
             - { property: 'email', type: 'email' }
             - enabled
             - lastLogin
+        edit:
+          title: 'Edit Teacher'
+          fields: ['username', 'email', 'roles']
+
       Student:
         class: UserBundle\Entity\Student
         label: 'Students'
@@ -103,6 +107,10 @@ easy_admin:
             - { property: 'email', type: 'email' }
             - enabled
             - lastLogin
+        edit:
+          title: 'Edit Student'
+          fields: ['username', 'email', 'batch', 'roles']
+
       Batch:
         class: AppBundle\Entity\Batch
         label: 'Batches'
