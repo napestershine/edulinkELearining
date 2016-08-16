@@ -38,6 +38,11 @@ class Course
      */
     private $modules;
 
+    public function __toString()
+    {
+        return (string) $this->name;
+    }
+
 
     /**
      * Get id
@@ -72,5 +77,45 @@ class Course
     {
         return $this->name;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->modules = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add module
+     *
+     * @param \AppBundle\Entity\Module $module
+     *
+     * @return Course
+     */
+    public function addModule(\AppBundle\Entity\Module $module)
+    {
+        $this->modules[] = $module;
+
+        return $this;
+    }
+
+    /**
+     * Remove module
+     *
+     * @param \AppBundle\Entity\Module $module
+     */
+    public function removeModule(\AppBundle\Entity\Module $module)
+    {
+        $this->modules->removeElement($module);
+    }
+
+    /**
+     * Get modules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
+}

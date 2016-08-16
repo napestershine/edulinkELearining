@@ -38,5 +38,28 @@ class Session
     {
         return $this->id;
     }
-}
 
+    /**
+     * Set module
+     *
+     * @param \AppBundle\Entity\Module $module
+     *
+     * @return Session
+     */
+    public function setModule(\AppBundle\Entity\Module $module = null)
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    /**
+     * Get module
+     *
+     * @return \AppBundle\Entity\Module
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+}

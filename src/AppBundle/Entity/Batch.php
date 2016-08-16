@@ -28,6 +28,11 @@ class Batch
      */
     private $name;
 
+    public function __toString()
+    {
+        return (string) $this->name;
+    }
+
 
     /**
      * Get id
@@ -63,4 +68,3 @@ class Batch
         return $this->name;
     }
 }
-
