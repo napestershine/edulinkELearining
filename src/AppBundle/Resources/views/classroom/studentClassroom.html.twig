@@ -19,6 +19,16 @@
     {{ parent() }}
     <script>
         var myRole = 'student';
+        function showQuestion(question){
+            $('#classroom').append('<div id="questionContainer" class="row" style="width:70vw; position: absolute;z-index: 1000;left: 30vw;top:5vh">' +
+                    '<div class="card" style="padding: 5px">'
+                    +'<div class=" "><span class="text-info">Question: </span>'+question+' </div>'
+                    +'</div>'
+                    +'</div>'
+
+            );
+        }
+
     </script>
     <script src="{{ '/js/simplewebrtc.bundle.js' }}" type="text/javascript"></script>
     <script src="{{ '/js/siploWebRTC.js' }}" type="text/javascript"></script>
