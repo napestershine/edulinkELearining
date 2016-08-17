@@ -22,11 +22,27 @@
         function showQuestion(question){
             $('#classroom').append('<div id="questionContainer" class="row" style="width:70vw; position: absolute;z-index: 1000;left: 30vw;top:5vh">' +
                     '<div class="card" style="padding: 5px">'
-                    +'<div class=" "><span class="text-info">Question: </span>'+question+' </div>'
+                    +'<div class="h5 "><span class="text-info">Question: </span>'+question+' </div>'
                     +'</div>'
                     +'</div>'
 
             );
+        }
+        function showAlert(message){
+            $('#classroom').append('<div id="alert" class="row" style="width:70vw; position: absolute;z-index: 1000;left: 30vw;top:5vh">' +
+                    '<div class="card" style="padding: 5px">'
+                    +'<div class="h5 "><span class="text-info">'+message+'</span> </div>'
+                    +'</div>'
+                    +'</div>'
+
+            );
+        }
+        function clearAlert(){
+            $("#alert").remove();
+        }
+        function clearQuestion(){
+            $("#questionContainer").remove();
+
         }
 
     </script>
