@@ -10,15 +10,15 @@
     {#<link rel="stylesheet" href="{{ asset('bundles/siploScheduler/css/classSchedule.css') }}">#}
 {#{% endblock stylesheets %}#}
 
-<div class="dashboard-class-schedule card">
-<div class="panel-warning" style="border-width:1px;border-style:solid;border-color:#ddd;width: inherit;max-height: inherit">
-   <div class="row">
-    <div class="col-md-10 text-center text-warning"
-         style="margin-top:0.5%;position: fixed;z-index: 10;background:transparent;">
-        <span></span>&nbsp&nbsp&nbsp<span class="h3 text-bold">Class Schedule</span>
-    </div>
-   </div>
-    <div  id='calendar' style="height: 69vh;overflow-y: scroll;margin-top:0.7% "></div>
+<div class="dashboard-class-schedule" >
+<div class="panel-warning" style="background:rgba(52,250,211,0.2);border-width:1px;border-style:solid;border-color:#ddd;width: inherit;max-height: inherit">
+   {#<div class="row">#}
+    {#<div class="col-md-10 text-center"#}
+         {#style="margin:0.5%;position: fixed;z-index: 10;background:transparent;color: #2b542c">#}
+        {#<span></span>&nbsp&nbsp&nbsp<span class="h3 text-bold">Class Schedule</span>#}
+    {#</div>#}
+   {#</div>#}
+    <div  id='calendar' style="height: 72vh;overflow-x: hidden;overflow-y: scroll;margin-top:0.7% "></div>
     <div class="row text-center" style="margin:0.1%;padding: 1%;background: transparent">
         {#{% set i = 0 %}#}
         {#{% for i in 0..6 %}#}
@@ -57,6 +57,7 @@
     $(document).ready(function() {
 
         $('#calendar').fullCalendar({
+
             eventSources: [
 
                 // your event source
@@ -111,16 +112,16 @@
 
             },
             nowIndicator:true,
-            firstDay:(new Date()).getDay(),
+            firstDay:1,
             allDaySlot:false,
             contentHeight: "auto",
 
-            minTime: "05:00:00",
-            maxTime: "23:59:00",
+            minTime: "07:00:00",
+            maxTime: "20:59:00",
             aspectRatio: 2,
             header: {
                 left: 'prev,next',
-                center: '',
+                center: 'title',
                 right: ''
             },
 //            defaultDate: '2016-01-01',
@@ -134,7 +135,8 @@
                     // options apply to agendaWeek and agendaDay views
                 },
                 week: {
-                    columnFormat:'dddd'
+                    columnFormat:'dddd',
+
                     // options apply to basicWeek and agendaWeek views
                 },
                 day: {

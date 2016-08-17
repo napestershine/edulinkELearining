@@ -25,7 +25,7 @@ class Student extends User
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\Student")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Batch")
      * @ORM\JoinColumn(name="batch_id", referencedColumnName="id")
      */
     private $batch;

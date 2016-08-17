@@ -1,15 +1,24 @@
 {% extends "@App/homepage/homepageLayout.html.twig" %}
 {% block body %}
     {{ parent() }}
-    <div class="row" style="margin-top: 5%">
+    <div class="row" style="margin-top: 10%;margin-left: 5vw">
         <div class="col-md-offset-1 col-md-3" >
-            <button class="btn btn-success btn-bg bg-btn"  style="color:#2c3b41" onclick="openWhiteboardWindow();"><span class="bg-btn-text">View this week <br> class schedule</span></button>
+            <a class="btn btn-success btn-bg bg-btn"  style="color:#0d3349" href="{{ path('schedule') }}">
+                <span class="bg-btn-text">View this week <br> class schedule</span>
+              <div style="margin-top: 5%"> <img src="{{ asset('/images/schedule.png') }}" width="80px"></div>
+            </a>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-info btn-bg bg-btn" style="color:#2c3b41" onclick="openVideoWindow();"><span class="bg-btn-text">Attend the class</span></button>
+            <a class="btn btn-info btn-bg bg-btn" style="color:#0d3349" href="{{ path('student_personal_classroom') }}">
+                <span class="bg-btn-text">Attend the class</span>
+                <div style="margin-top: 5%"> <img src="{{ asset('/images/class.png') }}" width="130px"></div>
+            </a>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-info btn-bg bg-btn" style="color:#2c3b41" onclick="openVideoWindow();"><span class="bg-btn-text">Get Course<br> material</span></button>
+            <a class="btn btn-info btn-bg bg-btn" style="color:#0d3349">
+                <span class="bg-btn-text">Get Course<br> material</span>
+            <div style="margin-top: 5%"> <img src="{{ asset('/images/document.png') }}" width="80px"></div>
+            </a>
         </div>
     </div>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -15,18 +16,18 @@ class EventController extends Controller
      */
     public function getTimeSlotsAction(Request $request)
     {
-        $request = $this->container->get('request');
-        $userId = $request->request->get('userId');
+//        $request = $this->container->get('request');
+        $user = $this->getUser();
         $logger = $this->get('logger');
-        $logger->debug("SchedulerBundle: teacherID", [$userId]);
+        $logger->debug("SchedulerBundle: teacherID", [$user]);
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('UserBundle:User')->findOneBy(
-            array('id' => $userId)
-        );
+//        $user = $em->getRepository('UserBundle:Student')->findOneBy(
+//            array('id' => $userId)
+//        );
         if($user!=null){
             $allSessions=$em->getRepository('AppBundle:Session')->findByBatchId($user->getBatch()->getId());
 //            $allSessions = $user->getBatch()->getSessions();
-            $allEvents =  $user->getEvents();
+//            $allEvents =  $user->getEvents();
             $freeEvent = null;
             $freeEventsArr = null;
             foreach($allSessions as $eachSession){

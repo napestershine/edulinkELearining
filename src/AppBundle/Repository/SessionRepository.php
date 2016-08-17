@@ -14,8 +14,8 @@ class SessionRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->_em->createQueryBuilder();
         $qb->select('s')
             ->from($this->_entityName, 's')
-            ->where('s.batchId = :batiId')
-            ->setParameter('bathId', $batchId);
+            ->where('s.batchId = :batchId')
+            ->setParameter('batchId', $batchId);
 
         return $qb->getQuery()->getResult();
     }

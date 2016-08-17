@@ -31,8 +31,28 @@ class Session
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Batch")
      * @ORM\JoinColumn(name="batch_id", referencedColumnName="id")
      */
-    private $batch;
+    private $batchId;
+    /**
+     * @ORM\OneToOne(targetEntity="Siplo\SchedulerBundle\Entity\Event")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     */
+    protected $event;
 
+    /**
+     * @return mixed
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param mixed $event
+     */
+    public function setEvent($event)
+    {
+        $this->event = $event;
+    }
 
 
     /**
@@ -76,9 +96,9 @@ class Session
      *
      * @return Session
      */
-    public function setBatch(\AppBundle\Entity\Batch $batch = null)
+    public function setBatchId(\AppBundle\Entity\Batch $batch = null)
     {
-        $this->batch = $batch;
+        $this->batchId = $batch;
 
         return $this;
     }
@@ -88,8 +108,8 @@ class Session
      *
      * @return \AppBundle\Entity\Batch
      */
-    public function getBatch()
+    public function getBatchId()
     {
-        return $this->batch;
+        return $this->batchId;
     }
 }

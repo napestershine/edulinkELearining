@@ -21,7 +21,7 @@ class Event
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\SiploSession")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Session")
      * @ORM\JoinColumn(name="session_id", referencedColumnName="id")
      */
     protected $session;
@@ -262,11 +262,11 @@ class Event
     /**
      * Set session
      *
-     * @param \AppBundle\Entity\SiploSession $session
+     * @param \AppBundle\Entity\Session $session
      *
      * @return Event
      */
-    public function setSession(\AppBundle\Entity\SiploSession $session = null)
+    public function setSession(\AppBundle\Entity\Session $session = null)
     {
         $this->session = $session;
 
@@ -276,7 +276,7 @@ class Event
     /**
      * Get session
      *
-     * @return \AppBundle\Entity\SiploSession
+     * @return \AppBundle\Entity\Session
      */
     public function getSession()
     {

@@ -6,8 +6,10 @@
 {% endblock %}
 {% block body %}
     {{ parent() }}
-
-    <div class="row" style="margin-top: 5%">
+    <div class="h3 text-center" style="color:white">
+        Class Schedule
+    </div>
+    <div class="row" style="">
         {% embed "@SiploScheduler/Calendar/classSchedule.html.twig" %}
         {% endembed %}
     </div>
