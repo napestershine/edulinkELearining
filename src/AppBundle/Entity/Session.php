@@ -27,6 +27,12 @@ class Session
      */
     private $module;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Batch")
+     * @ORM\JoinColumn(name="batch_id", referencedColumnName="id")
+     */
+    private $batch;
+
 
 
     /**
@@ -61,5 +67,29 @@ class Session
     public function getModule()
     {
         return $this->module;
+    }
+
+    /**
+     * Set batch
+     *
+     * @param \AppBundle\Entity\Batch $batch
+     *
+     * @return Session
+     */
+    public function setBatch(\AppBundle\Entity\Batch $batch = null)
+    {
+        $this->batch = $batch;
+
+        return $this;
+    }
+
+    /**
+     * Get batch
+     *
+     * @return \AppBundle\Entity\Batch
+     */
+    public function getBatch()
+    {
+        return $this->batch;
     }
 }
