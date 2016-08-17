@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class SessionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByBatchId($batchId){
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('s')
+            ->from($this->_entityName, 's')
+            ->where('s.batchId = :batiId')
+            ->setParameter('bathId', $batchId);
+
+        return $qb->getQuery()->getResult();
+    }
 }
