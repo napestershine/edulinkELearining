@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new UserBundle\UserBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new Siplo\SchedulerBundle\SiploSchedulerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

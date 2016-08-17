@@ -16,6 +16,8 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "moment": "momentjs#^2.14.1",
+    "fullcalendar": "^2.9.1"
   }
 }

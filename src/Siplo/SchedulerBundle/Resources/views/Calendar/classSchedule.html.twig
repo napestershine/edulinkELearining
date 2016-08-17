@@ -1,0 +1,405 @@
+
+{#<link rel="stylesheet" href="{{ asset('bundles/siploscheduler/css/fullcalendar.css') }}" />#}
+
+
+
+{#<script src="{{ asset('assets/vendor/moment/min/moment.min.js') }}"></script>#}
+{#<script src="{{ asset('assets/vendor/fullcalendar/dist/fullcalendar.js') }}"></script>#}
+
+{#{% block stylesheets %}#}
+    {#<link rel="stylesheet" href="{{ asset('bundles/siploScheduler/css/classSchedule.css') }}">#}
+{#{% endblock stylesheets %}#}
+
+<div class="dashboard-class-schedule card">
+<div class="panel-warning" style="border-width:1px;border-style:solid;border-color:#ddd;width: inherit;max-height: inherit">
+   <div class="row">
+    <div class="col-md-10 text-center text-warning"
+         style="margin-top:0.5%;position: fixed;z-index: 10;background:transparent;">
+        <span></span>&nbsp&nbsp&nbsp<span class="h3 text-bold">Class Schedule</span>
+    </div>
+   </div>
+    <div  id='calendar' style="height: 69vh;overflow-y: scroll;margin-top:0.7% "></div>
+    <div class="row text-center" style="margin:0.1%;padding: 1%;background: transparent">
+        {#{% set i = 0 %}#}
+        {#{% for i in 0..6 %}#}
+        {% if is_granted('ROLE_TEACHER') %}
+            <div id="scheduleButtonLabel" class="col-md-offset-4 col-md-4 col-sm-offset-0 col-sm-0 col-xs-offset-0 col-xs-0">
+
+            </div>
+            <div class="col-md-offset-1 col-md-1 col-sm-4 col-xs-4">
+                <button id="addNewButton" class="btn btn-success btn-fab btn-fab-mini text-black" onclick="toggleAddSlot()" data-toggle="tooltip" data-placement="bottom" title="Add new free slots"><i class="material-icons">add</i></button>
+
+            </div>
+            <div class="col-md-1 col-sm-4 col-xs-4">
+                <button id="deleteButton" class="btn btn-danger btn-fab btn-fab-mini text-black " onclick="toggleDeleteSlot()"  data-toggle="tooltip" data-placement="bottom" title="Delete free slots"><i class="material-icons">delete</i></button>
+
+            </div>
+            <div class="col-md-1 col-sm-4 col-xs-4">
+                <button id="saveButton" class="disabled btn btn-warning btn-fab btn-fab-mini text-black" onclick="saveEvents()"  data-toggle="tooltip" data-placement="bottom" title="Save changes"><i class="material-icons">save</i></button>
+
+            </div>
+        {% endif %}
+        {#{% endfor %}#}
+    </div>
+
+</div>
+    {#<div class="panel panel-warning" style="margin: 0 5%;padding: 0% 2%">#}
+        {#<div class="row">#}
+
+            {##}
+        {#</div>#}
+    {#</div>#}
+</div>
+<script>
+
+
+
+    $(document).ready(function() {
+
+        $('#calendar').fullCalendar({
+            eventSources: [
+
+                // your event source
+                {
+
+                    url: '{{ path('get_class_timeslots') }}',
+
+                    type: 'POST',
+                    data: {
+                        userId:{{app.user.id}}
+//                    custom_param2: 'somethingelse'
+                    },
+                    error: function() {
+                        alert('there was an error while fetching events!');
+                    },
+                    success: function(){
+                        window.setTimeout(renderFreeSlots,100);
+
+                    },
+//                color: 'yellow',   // a non-ajax option
+                    textColor: 'black', // a non-ajax option
+                    overlap:false,
+                    durationEditable:false,
+
+                }
+
+                // any other sources...
+
+            ],
+            eventClick: function(calEvent, jsEvent, view) {
+//                renderFreeSlots();
+
+//                event.title = "CLICKED!";
+                if(deleteClicked && calEvent.title=="Free Slot"){
+
+                        $('#calendar').fullCalendar('removeEvents', calEvent.id);
+                        if(calEvent.id>=0) {
+                            removedList.push(calEvent.id);
+
+                        }
+                    scheduleChanged();
+
+                }
+                else if(calEvent.title == "Requested"){
+                    getNotification(calEvent.url);
+                }
+                else if(calEvent.title == "Class"){
+                    loadClass(calEvent.url);
+
+                }
+                return false;
+
+            },
+            nowIndicator:true,
+            firstDay:(new Date()).getDay(),
+            allDaySlot:false,
+            contentHeight: "auto",
+
+            minTime: "05:00:00",
+            maxTime: "23:59:00",
+            aspectRatio: 2,
+            header: {
+                left: 'prev,next',
+                center: '',
+                right: ''
+            },
+//            defaultDate: '2016-01-01',
+            defaultView: 'agendaWeek',
+//            height:450,
+            views: {
+                basic: {
+                    // options apply to basicWeek and basicDay views
+                },
+                agenda: {
+                    // options apply to agendaWeek and agendaDay views
+                },
+                week: {
+                    columnFormat:'dddd'
+                    // options apply to basicWeek and agendaWeek views
+                },
+                day: {
+                    // options apply to basicDay and agendaDay views
+                }
+            },
+            editable: true,
+
+            eventDrop: function(event, delta, revertFunc) {
+                updated(event.id);
+//                alert(event.id + " was dropped on " + event.start.format());
+
+//                if (!confirm("Are you sure about this change?")) {
+//                    revertFunc();
+//                }
+                scheduleChanged();
+
+            },
+            eventResize: function(event, delta, revertFunc) {
+                updated(event.id);
+//                alert(event.id + " end is now " + event.end.format());
+
+//                if (!confirm("is this okay?")) {
+//                    revertFunc();
+//                }
+                scheduleChanged();
+
+            },
+            dayClick: function(date, jsEvent, view) {
+              if(newClicked) {
+                  $start = date.clone();
+                  $end = date.clone();
+                  $end.hour($end.hour() + 1);
+                  addSlot($start, $end);
+                  scheduleChanged();
+              }
+
+            }
+
+//            events: [
+//
+//
+//            ]
+        });
+//        window.setTimeout(renderFreeSlots,1000);
+
+    });
+
+    var updatedList = [];
+    var removedList = [];
+    function updated($id){
+        updatedList[$id]=1;
+//        console.log($id);
+    }
+    var count=-1;
+    var editable = true;
+    var color;
+    var title;
+    var newClicked=false;
+    var deleteClicked=false;
+
+    function toggleDeleteSlot(){
+        newClicked = false;
+        if(deleteClicked){
+            $("#deleteButton").removeClass('btn-raised');
+            removeLabel();
+            deleteClicked=false;
+        }
+        else {
+            $("#deleteButton").addClass('btn-raised');
+            changeLabel('danger','Click on free slot to delete');
+            deleteClicked=true;
+        }
+    }
+    function toggleAddSlot(){
+        deleteClicked = false;
+        if(newClicked){
+            newClicked=false;
+            removeLabel();
+        }
+        else {
+            changeLabel('success','Click on time slot to mark as a free slot');
+            newClicked=true;
+        }
+    }
+    function removeLabel(){
+        $("#scheduleButtonLabel").html('');
+    }
+    function changeLabel($style,$message){
+        $("#scheduleButtonLabel").html( '<div class="card label label-'+$style+'"><span class="h4">'+$message+'</span></div>');
+    }
+    function scheduleChanged(){
+        $("#saveButton").removeClass('disabled');
+    }
+    //get first day of the week
+    function getMonday(d) {
+        d = new Date(d);
+        var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+        return new Date(d.setDate(diff));
+    }
+
+
+    function addSlot($startTime,$endTime){
+//        var date = new Date();
+//
+//        //find date of (today+6days)
+//        date.setTime(date.getTime()+($day*24*3600*1000));
+//        var day = date.getDate();
+//        var year  = date.getFullYear();
+//        var month = date.getMonth()+1;
+//
+//        if(month<10){
+//            month = '0'+month;
+//        }
+//        if(day<10){
+//            day = '0'+day;
+//        }
+
+
+        color = "orange";
+        title = "Free Slot";
+
+//        alert($startTime.format()+" e:"+$endTime.format());
+////        console.log(year+'-'+month+'-'+day+'T07:00:00+0530');
+        $('#calendar').fullCalendar('renderEvent', {
+            id: count,
+            title: title,
+            start:$startTime,
+            end: $endTime,
+            color:color,
+            editable:true,
+            overlap:false,
+            className: null,
+            textColor: 'black',
+            durationEditable:false
+
+
+        });
+        count--;
+    }
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setTime(result.getTime() + days*24*60*60*1000);
+        return result;
+    }
+    function renderFreeSlots(){
+
+        var events = $('#calendar').fullCalendar( 'clientEvents');
+        var event;
+        for(event = events.length-1 ; event>=0; event--) {
+            if(events[event].title != 'Class' && events[event].title != 'Conducted' ){
+                var start_d = new Date(events[event].start._i);
+                var start = new Date();
+                //find the difference of weeks between this week and event's week
+                var weekDiff = Math.ceil(((start.getTime()-start.getTime()%(24*3600*1000))-start_d.getTime())/(7*24*60*60*1000));
+                console.log("weekdiff:"+weekDiff);
+
+                //add week differance and bring the evemt to this week
+                start.setTime(start_d.getTime()+(weekDiff*7*24*60*60*1000));
+                var end_d = new Date(events[event].end._i);
+                var end = new Date();
+                end.setTime(end_d.getTime()+(weekDiff*7*24*60*60*1000));
+                console.log("original: "+start_d);
+                var date = start.getDate();
+
+
+                var today = new Date();
+                //shift free slot date to this week if it has been passed
+//                if((today.getDate()!=start.getDate()) && (today.getTime()>start.getTime())){
+//                    console.log("now "+today.getTime());
+////                    start.setTime(start.getTime() +  (7 * 24 * 60 * 60 * 1000));
+////                    end.setTime(end.getTime() -  (7 * 24 * 60 * 60 * 1000));
+//                    date =start.getDate();
+//                }
+//                console.log("saved:"+date);
+
+                $('#calendar').fullCalendar('removeEvents',events[event].id);
+
+                var month = start.getMonth()+1;
+                if(month<10){
+                    month = '0'+month;
+                }
+
+                if(date<10){
+                    date = '0'+date;
+                }
+console.log("new: "+start.getFullYear()+'-'+month+'-'+date+'T'+start.toTimeString().substring(0,8)+start.toTimeString().substring(12,17));
+                $('#calendar').fullCalendar('renderEvent', {
+                    id: events[event].id,
+                    title: events[event].title,
+                    start:start.getFullYear()+'-'+month+'-'+date+'T'+start.toTimeString().substring(0,8)+start.toTimeString().substring(12,17),
+                    end: end.getFullYear()+'-'+month+'-'+date+'T'+end.toTimeString().substring(0,8)+end.toTimeString().substring(12,17),
+                    color:events[event].color,
+                    textColor:"black",
+                    url:events[event].url,
+                    editable:true,
+                    overlap:false,
+                    className: null,
+                    durationEditable:false
+
+                });
+
+
+//               console.log("saved e: "+" id: "+events[event].id+"\n");
+            }
+        }
+    }
+
+    function saveEvents(){
+        newClicked=false;
+        deleteClicked=false;
+        var events = $('#calendar').fullCalendar( 'clientEvents');
+        var newEvents = [];
+        var updatedEvents= [];
+        var event;
+        var newEventCount=0;
+        var updatedEventCount = 0;
+        for(event in events) {
+//            alert(events[event].id);
+//            console.log(event.id);
+//            console.log(JSON.stringify(event));
+            if(events[event].id < 0) {
+                newEvents[newEventCount++] = events[event];
+            }
+            else if(events[event].id in updatedList){
+//                alert(events[event].id);
+                updatedEvents[updatedEventCount++] = events[event];
+            }
+        }
+
+        var json = JSON.stringify(newEvents);
+//        console.log(json);
+        $.post('{{ path('event_create_ajax') }}',
+                {data:json},
+                function (response) {
+
+//                    alert(response);
+
+                }, "json");
+
+         json = JSON.stringify(updatedEvents);
+//        console.log(json);
+        $.post('{{ path('event_update_ajax') }}',
+                {data:json},
+                function (response) {
+
+                  console.log("Changes has been saved!");
+                    showCalendar();
+
+                }, "json");
+        $.post('{{ path('events_delete_ajax') }}',
+                {data:removedList},
+                function (response) {
+
+//                    console.log("Changes has been saved!");
+                    showCalendar();
+
+                }, "json");
+
+        updatedList = [];
+        removedList =[];
+    }
+    function clearEvent(){
+        $('#calendar').fullCalendar('removeEvents',(++count));
+    }
+
+</script>

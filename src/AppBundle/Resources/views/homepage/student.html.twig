@@ -1,0 +1,15 @@
+{% extends "@App/homepage/homepageLayout.html.twig" %}
+{% block body %}
+    {{ parent() }}
+    <div class="row" style="margin-top: 5%">
+        <div class="col-md-offset-1 col-md-3" >
+            <button class="btn btn-success btn-bg bg-btn"  style="color:#2c3b41" onclick="openWhiteboardWindow();"><span class="bg-btn-text">View this week <br> class schedule</span></button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-info btn-bg bg-btn" style="color:#2c3b41" onclick="openVideoWindow();"><span class="bg-btn-text">Attend the class</span></button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-info btn-bg bg-btn" style="color:#2c3b41" onclick="openVideoWindow();"><span class="bg-btn-text">Get Course<br> material</span></button>
+        </div>
+    </div>
+{% endblock %}

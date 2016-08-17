@@ -1,0 +1,14 @@
+
+.dashboard-class-schedule{
+    margin: 6.5% 1%;
+    margin-bottom:2%;
+    width: inherit;
+    padding: 2%;
+    max-height: 82vh;
+}
+
+@media (max-width: 767px) {
+    .dashboard-class-schedule{
+        margin: 50px 0 0 0;
+    }
+}
