@@ -41,6 +41,9 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
         {
             $response = new RedirectResponse($this->router->generate('student_homepage'));
         }
+        else{
+            $response = new RedirectResponse($this->router->generate('fos_user_security_login'));
+        }
 
 //        elseif ($this->security->isGranted('ROLE_USER'))
 //        {

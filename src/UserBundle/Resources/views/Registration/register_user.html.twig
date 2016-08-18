@@ -1,0 +1,21 @@
+{% extends "UserBundle::form_layout.html.twig" %}
+{% block form %}
+
+    <form action="{{ path("register_student") }}" method="post">
+
+        {{ form_widget(form.email, { 'attr': {'type':'email', 'placeholder':'Email','class': 'form-control'} }) }}
+        {{ form_widget(form.username, { 'attr': {'type':'text', 'placeholder':'Username','class': 'form-control'} }) }}
+        {{ form_widget(form.plainPassword.first, { 'attr': {'type':'password', 'placeholder':'Password','class': 'form-control'} }) }}
+        {{ form_widget(form.plainPassword.second, { 'attr': {'type':'password', 'placeholder':'Repeat Password','class': 'form-control'} }) }}
+        {{ form_errors(form) }}
+        {{ form_rest(form) }}
+
+        {# for sake of spacing #}
+        <div id="remember" class="checkbox">
+            <label>
+            </label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}">Register</button>
+    </form><!-- /form -->
+{% endblock form %}
