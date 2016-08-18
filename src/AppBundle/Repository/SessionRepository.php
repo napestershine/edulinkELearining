@@ -19,4 +19,15 @@ class SessionRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findByTeacherId($teacherId){
+        $qb = $this->_em->createQueryBuilder();
+            $qb->select('session')
+            ->from($this->_entityName, 'session')
+            ->leftJoin('session.module', 'module')
+            ->where('module.teacher = :teacherId')
+            ->setParameter('teacherId', $teacherId);
+
+        return $qb->getQuery()->getResult();
+    }
 }
